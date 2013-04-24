@@ -1,0 +1,10 @@
+name: StaffChatX
+version: ${version}
+main: me.riverm.main
+commands:
+  sc:
+    description: Send a Chat message to the online Staff!
+    permission: StaffChatX.chat
+  scinfo:
+    description: Show StaffChatX Information
+    permission: StaffChatX.info
