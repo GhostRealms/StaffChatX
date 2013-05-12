@@ -1,5 +1,5 @@
 name: StaffChatX
-version: ${version}
+version: 0.0.2
 main: me.riverm.main
 commands:
   sc:

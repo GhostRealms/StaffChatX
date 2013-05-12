@@ -16,19 +16,21 @@ public class scexe implements CommandExecutor {
 		    if(!(sndr instanceof Player)) {
 		        return false;
 		    }
-		    if (args.length == 0) {
+		    if (args.length == 0 || !(sndr.hasPermission("StaffChatX.send"))) {
 		        return false;
-		    }  
-		    Player player = (Player) sndr;
+		    } else {
+		    String sperm = "StaffChatX.receive";
 		       
 		    String msg = StringUtils.join(args, " ");
-		    for(Player p: Bukkit.getServer().getOnlinePlayers()) {
-		    	if (p.hasPermission("StaffChatX.chat")) {
-				    Bukkit.broadcastMessage(ChatColor.BLUE + "[STAFF] " + ChatColor.WHITE + player.getDisplayName() + "> " + ChatColor.GRAY + msg);
+		    Player play = (Player) sndr;
+		    
+		    for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+		    	if (p.hasPermission(sperm)) {
+		    		p.sendMessage(ChatColor.BLUE + "[Staff] " + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
+		    		}
 		    	}
 		    }
-		}
-		return false;
+	    }
+		return false;	
 	}
-
 }
