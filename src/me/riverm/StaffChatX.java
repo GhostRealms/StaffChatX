@@ -32,7 +32,7 @@ public final class StaffChatX extends JavaPlugin {
 		    
 		    for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 		    	if (p.hasPermission(sperm)) {
-		    		p.sendMessage(ChatColor.BLUE + this.getConfig().getString("prefix") + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
+		    		p.sendMessage(ChatColor.BLUE + this.getConfig().getString("prefix") + " " + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
 		    		}
 		    	}
 		    }
