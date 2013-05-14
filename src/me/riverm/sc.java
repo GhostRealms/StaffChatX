@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class sc implements CommandExecutor {
+	StaffChatX scx = new StaffChatX();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -26,7 +27,7 @@ public class sc implements CommandExecutor {
 		    
 		    for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 		    	if (p.hasPermission(sperm)) {
-		    		p.sendMessage(ChatColor.BLUE + "[Staff] " + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
+		    		p.sendMessage(ChatColor.BLUE + scx.getConfig().getString("prefix") + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
 		    		}
 		    	}
 		    }
