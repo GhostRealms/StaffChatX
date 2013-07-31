@@ -1,7 +1,6 @@
 package me.riverm;
 
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,9 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class StaffChatX extends JavaPlugin {
 	
+	Player play;
+	String user = play.toString();
+	String prefix = colorize(getConfig().getString("prefix"));
 	
 	public void onEnable() {
-		this.saveDefaultConfig();
+		loadConf();
 	}
 	public void onDisable() {
 	}
@@ -22,24 +24,34 @@ public final class StaffChatX extends JavaPlugin {
 		    if(!(sender instanceof Player)) {
 		        return false;
 		    }
-		    if (args.length == 0 || !(sender.hasPermission("StaffChatX.send"))) {
+		    if (args.length == 0 || !(sender.hasPermission("StaffChatX.send")) || !(sender.isOp())) {
 		        return false;
-		    } else {
-		    String sperm = "StaffChatX.receive";
-		       
+		    } else {		       
 		    String msg = StringUtils.join(args, " ");
-		    Player play = (Player) sender;
-		    
-		    for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-		    	if (p.hasPermission(sperm)) {
-		    		String message = this.getConfig().getString("prefix");
-		            message = message.replaceAll("&", "§");
-		    		p.sendMessage(ChatColor.BLUE + message + " " + ChatColor.WHITE + play.getDisplayName() + "> " + msg);
-		    		}
-		    	}
+		    play = (Player) sender;
+		    sendMessage(msg);
 		    }
-	    }
-		return false;	
+		}
+		return false;
+	}
+	
+	void sendMessage(String msg) {
+		for(Player p : getServer().getOnlinePlayers()) {
+			if(p.hasPermission("staffchatx.chat") || p.isOp()) {
+				String m = colorize(msg);
+				p.sendMessage(prefix + play.getDisplayName() + ChatColor.WHITE + ": " + m);
+			}
+		}
+	}
+	
+	String colorize(String m) {
+		m = m.replaceAll("&", "§");
+		return m;
+	}
+	
+	void loadConf() {
+		getConfig().addDefault("prefix", "&c[Staff]");
+		saveConfig();
 	}
 
 }
