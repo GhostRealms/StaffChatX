@@ -29,19 +29,20 @@ public final class StaffChatX extends JavaPlugin {
 		    } else {		       
 		    String msg = StringUtils.join(args, " ");
 		    play = (Player) sender;
-		    sendMessage(msg);
+		    for(Player p : getServer().getOnlinePlayers()) {
+		    	if(p.hasPermission("staffchatx.chat") || p.isOp()) {
+		    		String format = getConfig().getString("format");
+		    		format = StringUtils.replace("%prefix", null, getConfig().getString("prefix"));
+		    		format = StringUtils.replace("%player", null, sender.toString());
+		    		format = StringUtils.replace("%message", null, StringUtils.join(args, " "));
+		    		p.sendMessage(colorize(format));
+		    		} else {
+		    			sender.sendMessage(colorize(getConfig().getString("prefix")) + ChatColor.RED + " You dont have permission.");
+		    		}
+		    	}
 		    }
 		}
-		return false;
-	}
-	
-	void sendMessage(String msg) {
-		for(Player p : getServer().getOnlinePlayers()) {
-			if(p.hasPermission("staffchatx.chat") || p.isOp()) {
-				String m = colorize(msg);
-				p.sendMessage(prefix + play.getDisplayName() + ChatColor.WHITE + ": " + m);
-			}
-		}
+		return false;	
 	}
 	
 	String colorize(String m) {
@@ -51,6 +52,7 @@ public final class StaffChatX extends JavaPlugin {
 	
 	void loadConf() {
 		getConfig().addDefault("prefix", "&c[Staff]");
+		getConfig().addDefault("format", "%prefix %player &f: %message");
 		saveConfig();
 	}
 
