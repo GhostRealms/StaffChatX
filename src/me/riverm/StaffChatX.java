@@ -9,8 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class StaffChatX extends JavaPlugin {
 	
-	Player play;
-	String user = play.toString();
 	String prefix = colorize(getConfig().getString("prefix"));
 	
 	public void onEnable() {
@@ -27,8 +25,6 @@ public final class StaffChatX extends JavaPlugin {
 		    if (args.length == 0 || !(sender.hasPermission("StaffChatX.send")) || !(sender.isOp())) {
 		        return false;
 		    } else {		       
-		    String msg = StringUtils.join(args, " ");
-		    play = (Player) sender;
 		    for(Player p : getServer().getOnlinePlayers()) {
 		    	if(p.hasPermission("staffchatx.chat") || p.isOp()) {
 		    		String format = getConfig().getString("format");
