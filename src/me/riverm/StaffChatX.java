@@ -9,8 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class StaffChatX extends JavaPlugin {
 	
-	String prefix = colorize(getConfig().getString("prefix"));
-	
 	public void onEnable() {
 		loadConf();
 	}
@@ -49,6 +47,7 @@ public final class StaffChatX extends JavaPlugin {
 	void loadConf() {
 		getConfig().addDefault("prefix", "&c[Staff]");
 		getConfig().addDefault("format", "%prefix %player &f: %message");
+		getConfig().addDefault("mode", "Not implemented at this time");
 		saveConfig();
 	}
 
