@@ -24,11 +24,19 @@ public final class StaffChatX extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("sc")) {
 			if(sender instanceof Player) {
-				String msg = StringUtils.join(args);
+				if(args.length >= 1) {
+				String msg = StringUtils.join(args, " ");
 				Player p = (Player) sender;
 				if(sender.hasPermission("staffchat.chat") || sender.isOp()) {
 					sendStaffMsg(p, msg);
+				} else {
+					sender.sendMessage(ChatColor.RED + "You Don't have permissions to preform that action!");
 				}
+				} else {
+					sender.sendMessage(ChatColor.RED + "Invalid Arguments, You must supply a Message!");
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "Only a Player can talk in Staff Chat!");
 			}
 		}
 		return false;
