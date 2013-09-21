@@ -1,8 +1,7 @@
 name: StaffChatX
-version: 0.0.2
+version: 1.0
 main: me.riverm.StaffChatX
 commands:
   sc:
     description: Send a Chat message to the online Staff!
-  scinfo:
-    description: Show StaffChatX Information
+    aliases: [s]

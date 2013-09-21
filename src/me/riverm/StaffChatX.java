@@ -1,6 +1,7 @@
 package me.riverm;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,46 +10,40 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class StaffChatX extends JavaPlugin {
 	
+	String prefix;
+	
 	public void onEnable() {
-		loadConf();
+		this.saveDefaultConfig();
+		prefix = colorize(this.getConfig().getString("prefix"));
+		
 	}
 	public void onDisable() {
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(label.equalsIgnoreCase("sc")) {
-		    if(!(sender instanceof Player)) {
-		        return false;
-		    }
-		    if (args.length == 0 || !(sender.hasPermission("StaffChatX.send")) || !(sender.isOp())) {
-		        return false;
-		    } else {		       
-		    for(Player p : getServer().getOnlinePlayers()) {
-		    	if(p.hasPermission("staffchatx.chat") || p.isOp()) {
-		    		String format = getConfig().getString("format");
-		    		format = StringUtils.replace("%prefix", null, getConfig().getString("prefix"));
-		    		format = StringUtils.replace("%player", null, sender.toString());
-		    		format = StringUtils.replace("%message", null, StringUtils.join(args, " "));
-		    		p.sendMessage(colorize(format));
-		    		} else {
-		    			sender.sendMessage(colorize(getConfig().getString("prefix")) + ChatColor.RED + " You dont have permission.");
-		    		}
-		    	}
-		    }
+		if(cmd.getName().equalsIgnoreCase("sc")) {
+			if(sender instanceof Player) {
+				String msg = StringUtils.join(args);
+				Player p = (Player) sender;
+				if(sender.hasPermission("staffchat.chat") || sender.isOp()) {
+					sendStaffMsg(p, msg);
+				}
+			}
 		}
-		return false;	
+		return false;
 	}
 	
+	private void sendStaffMsg(Player p, String msg) {
+		for(Player ops : Bukkit.getServer().getOnlinePlayers()) {
+			if(ops.isOp()) {
+				p.sendMessage(prefix + " " + ChatColor.WHITE + p.getName() + ": " + msg);
+			}
+		}
+		
+	}
 	String colorize(String m) {
 		m = m.replaceAll("&", "§");
 		return m;
 	}
-	
-	void loadConf() {
-		getConfig().addDefault("prefix", "&c[Staff]");
-		getConfig().addDefault("format", "%prefix %player &f: %message");
-		getConfig().addDefault("mode", "Not implemented at this time");
-		saveConfig();
-	}
-
 }
