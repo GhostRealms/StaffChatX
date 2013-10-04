@@ -7,4 +7,4 @@ Every time changes are made to the project, the source code is pushed to this re
 
 
 
-Do not copy, use, or redistribute any part of this code without written permission from the author.
+Do not redistribute any part of this code without written permission from the author.
