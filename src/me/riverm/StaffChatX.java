@@ -16,7 +16,7 @@ public final class StaffChatX extends JavaPlugin {
 		this.saveDefaultConfig();
 		prefix = colorize(this.getConfig().getString("prefix"));
 		if(this.getConfig().getBoolean("auto-update")) {
-			Updater updater = new Updater(this, "StaffChatX", this.getFile(), Updater.UpdateType.DEFAULT, false);
+			Updater updater = new Updater(this, "staffchatx", this.getFile(), Updater.UpdateType.DEFAULT, false);
 		}
 		
 	}
