@@ -19,7 +19,6 @@ public final class StaffChatX extends JavaPlugin {
 		if(this.getConfig().getBoolean("auto-update")) {
 			Updater updater = new Updater(this, "staffchatx", this.getFile(), Updater.UpdateType.DEFAULT, false);	
 		}
-		getCommand("alert").setExecutor(new AlertCommand());
 	}
 	public void onDisable() {
 	}

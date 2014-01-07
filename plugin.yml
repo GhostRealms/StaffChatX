@@ -5,6 +5,3 @@ commands:
   sc:
     description: Send a Chat message to the online Staff!
     aliases: [s]
-  alert:
-    description: Send a Server Alert
-    aliases: [a, important]

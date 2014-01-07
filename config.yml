@@ -1,7 +1,3 @@
 prefix: '&b[Staff]'
 auto-update: true
 format: '{prefix} {sender} &f: {message}'
-alert:
-  prefix: '&4[Alert!]'
-  play-sound: true
-  color: &c
