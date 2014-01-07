@@ -11,13 +11,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class StaffChatX extends JavaPlugin {
 	
 	String prefix;
+	String format;
 	
 	public void onEnable() {
 		this.saveDefaultConfig();
 		prefix = colorize(this.getConfig().getString("prefix"));
 		if(this.getConfig().getBoolean("auto-update")) {
-			@SuppressWarnings("unused")
-			Updater updater = new Updater(this, "staffchatx", this.getFile(), Updater.UpdateType.DEFAULT, false);
+			Updater updater = new Updater(this, "staffchatx", this.getFile(), Updater.UpdateType.DEFAULT, false);	
 		}
 		getCommand("alert").setExecutor(new AlertCommand());
 	}
@@ -48,8 +48,10 @@ public final class StaffChatX extends JavaPlugin {
 	
 	private void sendStaffMsg(Player p, String msg) {
 		for(Player ops : Bukkit.getServer().getOnlinePlayers()) {
-			if(ops.isOp()) {
-				p.sendMessage(prefix + " " + ChatColor.WHITE + p.getName() + ": " + msg);
+			if(ops.isOp() || ops.hasPermission("staffchat.chat")) {
+				format = this.getConfig().getString("format").replace("{prefix}", prefix).replace("{player}", p.getName()).replace("{message}", msg);
+				format = colorize(format);
+				ops.sendMessage(format);
 			}
 		}
 		
